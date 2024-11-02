@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import for redirection
+import axios from 'axios'; // Axios for HTTP requests
 
 const ReportMissing = () => {
   const navigate = useNavigate();
@@ -39,17 +40,47 @@ const ReportMissing = () => {
   };
 
   // Submit form handler
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData); // Placeholder: replace with actual form submission logic
+    
+    // Creating FormData object to handle image file
+    const reportData = new FormData();
+    reportData.append('name', formData.name);
+    reportData.append('age', formData.age);
+    reportData.append('description', formData.description);
+    reportData.append('contactInfo', formData.contactInfo);
+    reportData.append('image', formData.image);
+
+    try {
+      // Replace with actual backend API endpoint for submitting reports
+      const response = await axios.post('/api/reports', reportData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      
+      // Handle success (e.g., show a confirmation message, reset the form)
+      console.log('Report submitted:', response.data);
+      alert('Report submitted successfully!');
+      setFormData({
+        name: '',
+        age: '',
+        description: '',
+        contactInfo: '',
+        image: null,
+      });
+    } catch (error) {
+      // Handle error (e.g., show error message)
+      console.error('Error submitting report:', error);
+      alert('Failed to submit report. Please try again.');
+    }
   };
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-orange-500 min-h-screen flex flex-col">
-    
       <div className="flex flex-col items-center text-white my-8 px-4">
         <h1 className="text-4xl font-bold mb-6">Report Missing Person</h1>
-
+        
         {/* Short paragraph explaining the purpose */}
         <p className="italic text-lg text-center mb-6 max-w-3xl">
           Amber Alert PRO is dedicated to helping families and communities locate missing persons quickly and efficiently. 

@@ -1,17 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Keep Link import for navigation
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import axios from 'axios';
 
 const SignUp = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('https://api.example.com/signup', { name, email, password });
+      setSuccess('Account created successfully!');
+      setError('');
+    } catch (err) {
+      setError('Failed to create account. Please try again.');
+      setSuccess('');
+    }
+  };
+
   return (
     <div className="bg-gradient-to-r from-blue-500 to-orange-500 min-h-screen flex flex-col">
-    
       <div className="flex flex-col items-center justify-center flex-grow text-white">
         <h1 className="text-4xl font-bold mb-8">Create Your Account</h1>
 
         {/* Sign-Up Form */}
         <div className="w-full max-w-md bg-white bg-opacity-20 p-8 rounded-lg shadow-md">
-          <form>
+          <form onSubmit={handleSignUp}>
             <div className="mb-6">
               <label className="block text-lg mb-2" htmlFor="name">
                 Name
@@ -21,6 +40,8 @@ const SignUp = () => {
                 id="name"
                 className="w-full p-3 rounded bg-white bg-opacity-20 text-white focus:outline-none"
                 placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
@@ -34,6 +55,8 @@ const SignUp = () => {
                 id="email"
                 className="w-full p-3 rounded bg-white bg-opacity-20 text-white focus:outline-none"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -47,9 +70,14 @@ const SignUp = () => {
                 id="password"
                 className="w-full p-3 rounded bg-white bg-opacity-20 text-white focus:outline-none"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
+
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+            {success && <p className="text-green-500 mb-4">{success}</p>}
 
             <button
               type="submit"
