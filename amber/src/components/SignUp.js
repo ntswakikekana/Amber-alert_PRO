@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
-import axios from 'axios';
+//import axios from 'axios';//
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -14,7 +14,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://api.example.com/signup', { name, email, password });
+      //const response = await axios.post('https://api.example.com/signup', { name, email, password });//
       setSuccess('Account created successfully!');
       setError('');
     } catch (err) {
