@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link for navigation
-import NavBar from './NavBar';
 import { useState, useEffect } from 'react';
 
 const ViewMissing = () => {
@@ -41,7 +40,7 @@ const ViewMissing = () => {
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-orange-500 min-h-screen flex flex-col">
-      <NavBar />
+    
       <div className="flex flex-col items-center text-white my-8 px-4">
         <h1 className="text-4xl font-bold mb-6">Missing Persons</h1>
         {missingPersons.length > 0 ? (

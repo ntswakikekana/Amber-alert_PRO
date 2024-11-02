@@ -1,13 +1,12 @@
 import React from 'react';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'; // Importing icons
-import NavBar from './NavBar'; // Ensure you have the NavBar component imported
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import SomeComponent from '../components/SomeComponent'; // Import SomeComponent
 
 const Home = () => {
   return (
     <div>
-      <NavBar />
+  
       <div className="min-h-screen bg-gradient-to-r from-blue-500 to-orange-500 flex flex-col items-center">
         {/* Welcome message based on login status */}
         <SomeComponent /> {/* Display login status */}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import for redirection
-import NavBar from './NavBar';
 
 const ReportMissing = () => {
   const navigate = useNavigate();
@@ -47,7 +46,7 @@ const ReportMissing = () => {
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-orange-500 min-h-screen flex flex-col">
-      <NavBar />
+    
       <div className="flex flex-col items-center text-white my-8 px-4">
         <h1 className="text-4xl font-bold mb-6">Report Missing Person</h1>
 

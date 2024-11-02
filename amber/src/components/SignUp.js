@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Keep Link import for navigation
-import NavBar from './NavBar';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 
 const SignUp = () => {
   return (
     <div className="bg-gradient-to-r from-blue-500 to-orange-500 min-h-screen flex flex-col">
-      <NavBar />
+    
       <div className="flex flex-col items-center justify-center flex-grow text-white">
         <h1 className="text-4xl font-bold mb-8">Create Your Account</h1>
 

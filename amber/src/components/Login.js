@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../features/auth/authSlice'; // Import the login action
 import { Link } from 'react-router-dom'; // For navigation
 import { FaGoogle, FaFacebook } from 'react-icons/fa'; // Social media icons
-import NavBar from './NavBar'; // Import NavBar for consistency
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -19,8 +19,7 @@ const Login = () => {
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-orange-500 min-h-screen flex flex-col">
-      {/* NavBar for consistent navigation */}
-      <NavBar />
+     
 
       {/* Login Form Section */}
       <div className="flex flex-col items-center justify-center flex-grow text-white">
