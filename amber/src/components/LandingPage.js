@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NavBar from './NavBar';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 const LandingPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* NavBar */}
-      <NavBar />
+    
 
       {/* Main Content */}
       <div className="flex-grow bg-gradient-to-r from-blue-500 to-orange-500 flex flex-col items-center justify-center">
