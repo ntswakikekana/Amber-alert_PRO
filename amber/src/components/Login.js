@@ -1,31 +1,41 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { login } from '../features/auth/authSlice'; // Import the login action
-import { Link } from 'react-router-dom'; // For navigation
-import { FaGoogle, FaFacebook } from 'react-icons/fa'; // Social media icons
-
+import { login } from '../features/auth/authSlice';
+import { Link } from 'react-router-dom';
+import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Normally you would fetch user data from API here
-    const user = { email };
-    dispatch(login(user)); // Dispatch login action with user data
+
+    try {
+      // Make API request to login
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login`, {
+        email,
+        password,
+      });
+
+      // Get the user data from response
+      const user = response.data;
+
+      // Dispatch login action with user data
+      dispatch(login(user));
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Handle error (e.g., display an error message to the user)
+    }
   };
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-orange-500 min-h-screen flex flex-col">
-     
-
-      {/* Login Form Section */}
       <div className="flex flex-col items-center justify-center flex-grow text-white">
         <h1 className="text-4xl font-bold mb-8">Login to Amber-alert PRO</h1>
 
-        {/* Login Form */}
         <div className="w-full max-w-md bg-white bg-opacity-20 p-8 rounded-lg shadow-md">
           <form onSubmit={handleLogin}>
             <div className="mb-6">
@@ -66,7 +76,6 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Social login options */}
           <div className="flex justify-center space-x-4 mt-6">
             <button className="bg-blue-600 text-white py-2 px-4 rounded-full flex items-center">
               <FaFacebook className="mr-2" />
@@ -78,20 +87,15 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Sign-up link */}
           <div className="mt-8 text-center">
             <p className="text-lg">Don't have an account?</p>
-            <Link
-              to="/signup" // Link to the SignUp page
-              className="text-blue-300 hover:underline font-semibold"
-            >
+            <Link to="/signup" className="text-blue-300 hover:underline font-semibold">
               Create one for free!
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-blue-600 w-full py-6 text-center text-white">
         <p>© 2024 Amber-alert PRO. All rights reserved.</p>
         <p>Contact us at: info@amberalertpro.com</p>
