@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import NavBar from './NavBar';
 
 const ContactPolice = () => {
   const [location, setLocation] = useState('');
   const [policeContact, setPoliceContact] = useState('');
+  const [error, setError] = useState(''); // For handling errors
+  const [loading, setLoading] = useState(false); // For loading state
 
-  // Simulated function to get the local police contact based on the location
-  const handleSearchPolice = (e) => {
+  const handleSearchPolice = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
+    setPoliceContact('');
 
-    // Example data, replace with actual data-fetching logic
-    const policeContacts = {
-      'New York': 'NYPD: +1 555-123-4567',
-      'Los Angeles': 'LAPD: +1 555-987-6543',
-      'Chicago': 'CPD: +1 555-234-5678',
-    };
-
-    if (policeContacts[location]) {
-      setPoliceContact(policeContacts[location]);
-    } else {
-      setPoliceContact('No contact information available for this location.');
+    try {
+      // Replace with your actual endpoint
+      const response = await axios.get(`/api/police-contacts?location=${location}`);
+      
+      if (response.data && response.data.contactInfo) {
+        setPoliceContact(response.data.contactInfo);
+      } else {
+        setPoliceContact('No contact information available for this location.');
+      }
+    } catch (err) {
+      setError('Error fetching police contact information. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -29,13 +36,11 @@ const ContactPolice = () => {
       <div className="flex flex-col items-center text-white my-8 px-4">
         <h1 className="text-4xl font-bold mb-6">Contact Local Authorities</h1>
 
-        {/* Short paragraph explaining the purpose */}
         <p className="italic text-lg text-center mb-6 max-w-3xl">
           Amber Alert PRO helps you contact local authorities to report or gather information on missing persons 
           quickly based on your location.
         </p>
 
-        {/* Form to search police contacts */}
         <div className="w-full max-w-xl bg-white bg-opacity-10 p-6 rounded-lg">
           <form onSubmit={handleSearchPolice}>
             <div className="mb-4">
@@ -58,14 +63,15 @@ const ContactPolice = () => {
               <button
                 type="submit"
                 className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-orange-500 hover:text-white transition duration-300"
+                disabled={loading}
               >
-                Search Police Contact
+                {loading ? 'Searching...' : 'Search Police Contact'}
               </button>
             </div>
           </form>
 
-          {/* Display police contact after search */}
-          {policeContact && (
+          {error && <p className="text-red-500 mt-4">{error}</p>}
+          {policeContact && !loading && (
             <div className="mt-6 bg-white bg-opacity-10 p-4 rounded text-center">
               <h2 className="text-xl font-semibold">Police Contact Information</h2>
               <p className="text-lg">{policeContact}</p>
