@@ -32,7 +32,6 @@ const ContactPolice = () => {
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-orange-500 min-h-screen flex flex-col">
-      <NavBar />
       <div className="flex flex-col items-center text-white my-8 px-4">
         <h1 className="text-4xl font-bold mb-6">Contact Local Authorities</h1>
 

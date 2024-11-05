@@ -3,12 +3,13 @@ import axios from 'axios';
 // Set up the base URL for all requests
 const API_BASE_URL = 'http://localhost:5000/api'; // Replace with your backend URL
 
-// Setting up Axios instance
+// Setting up Axios instance with credentials
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Authentication APIs
@@ -18,24 +19,23 @@ export const loginUser = async (userData) => {
     return response.data;
   } catch (error) {
     console.error("Login failed:", error);
-    throw error;
+    throw error.response.data;
   }
 };
 
 export const registerUser = async (userData) => {
   try {
-    const response = await api.post('/auth/register', userData);
+    const response = await api.post('/auth/signup', userData);
     return response.data;
   } catch (error) {
-    console.error("Registration failed:", error);
-    throw error;
+    throw error.response.data;
   }
 };
 
 // Missing Persons APIs
 export const reportMissingPerson = async (missingPersonData) => {
   try {
-    const response = await api.post('/missing', missingPersonData);
+    const response = await api.post('/report', missingPersonData);
     return response.data;
   } catch (error) {
     console.error("Failed to report missing person:", error);
@@ -45,7 +45,7 @@ export const reportMissingPerson = async (missingPersonData) => {
 
 export const getMissingPersons = async () => {
   try {
-    const response = await api.get('/missing');
+    const response = await api.get('/report');
     return response.data;
   } catch (error) {
     console.error("Failed to retrieve missing persons:", error);
@@ -74,11 +74,5 @@ export const contactPolice = async (contactData) => {
   }
 };
 
-export default {
-  loginUser,
-  registerUser,
-  reportMissingPerson,
-  getMissingPersons,
-  getMissingPersonById,
-  contactPolice,
-};
+export default api;
+

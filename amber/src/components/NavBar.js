@@ -21,8 +21,8 @@ const NavBar = () => {
         </div>
         <div className={`lg:flex lg:items-center lg:space-x-6 ${isOpen ? 'block' : 'hidden'}`}>
           <Link to="/home" className="text-white hover:text-orange-400">Home</Link>
-          <Link to="/reportmissing" className="text-white hover:text-orange-400">Report Missing</Link>
-          <Link to="/contactpolice" className="text-white hover:text-orange-400">Contact Police</Link>
+          <Link to="/report-missing" className="text-white hover:text-orange-400">Report Missing</Link>
+          <Link to="/contact-police" className="text-white hover:text-orange-400">Contact Police</Link>
           <Link to="/login" className="text-white hover:text-orange-400">Login</Link>
           <Link to="/signup" className="text-white hover:text-orange-400">SignUp</Link>
           <Link to="/about" className="text-white hover:text-orange-400">About</Link>

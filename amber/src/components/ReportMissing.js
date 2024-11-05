@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import for redirection
 import axios from 'axios'; // Axios for HTTP requests
+import { useSelector } from 'react-redux'; // Import for Redux state management
 
 const ReportMissing = () => {
   const navigate = useNavigate();
-
-  // Authentication logic (this is a placeholder)
-  useEffect(() => {
-    const isAuthenticated = false; // Update this with real authentication logic
-    if (!isAuthenticated) {
-      navigate('/login'); // Redirect to login if not authenticated
-    }
-  }, [navigate]);
 
   // State to handle the form inputs
   const [formData, setFormData] = useState({

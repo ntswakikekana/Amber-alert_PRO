@@ -1,26 +1,39 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
-//import axios from 'axios';//
+import { registerUserAction } from '../features/auth/authActions.js';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const SignUp = () => {
-  const [name, setName] = useState('');
+  const [username, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  
+  const { loading, error, success } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    }
+  }, [navigate, success]);
+      
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
     try {
-      //const response = await axios.post('https://api.example.com/signup', { name, email, password });//
-      setSuccess('Account created successfully!');
-      setError('');
-    } catch (err) {
-      setError('Failed to create account. Please try again.');
-      setSuccess('');
+      dispatch(registerUserAction({ username, email, password }));
     }
+    catch (err) {
+      console.error('Sign-up failed:', err);
+    }
+
   };
 
   return (
@@ -33,14 +46,14 @@ const SignUp = () => {
           <form onSubmit={handleSignUp}>
             <div className="mb-6">
               <label className="block text-lg mb-2" htmlFor="name">
-                Name
+                Username
               </label>
               <input
                 type="text"
                 id="name"
                 className="w-full p-3 rounded bg-white bg-opacity-20 text-white focus:outline-none"
                 placeholder="Enter your name"
-                value={name}
+                value={username}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
@@ -75,7 +88,7 @@ const SignUp = () => {
                 required
               />
             </div>
-
+            {loading && <p>Loading...</p>}
             {error && <p className="text-red-500 mb-4">{error}</p>}
             {success && <p className="text-green-500 mb-4">{success}</p>}
 

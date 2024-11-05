@@ -1,33 +1,31 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import { login } from '../features/auth/authSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
-import axios from 'axios';
+import { loginUserAction } from '../features/auth/authActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { loading, user, error  } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  
+  //useEffect(() => {
+  //  if (user) {
+  //    navigate('/');
+  //  }
+  //}, [navigate, user]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      // Make API request to login
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login`, {
-        email,
-        password,
-      });
-
-      // Get the user data from response
-      const user = response.data;
-
-      // Dispatch login action with user data
-      dispatch(login(user));
-    } catch (error) {
-      console.error("Login failed:", error);
-      // Handle error (e.g., display an error message to the user)
+      dispatch(loginUserAction({ email, password }));
+    } catch (err) {
+      console.error('Login failed:', err);
     }
   };
 
@@ -68,6 +66,8 @@ const Login = () => {
               />
             </div>
 
+            {loading && <p>Loading...</p>}
+            {error && <p className="text-red-500 mb-4">{error}</p>}
             <button
               type="submit"
               className="w-full bg-orange-500 text-white py-3 rounded hover:bg-white hover:text-orange-500 transition duration-300"
